@@ -29,7 +29,7 @@ const Navbar = ({
           }}
           style={{ maxWidth: "500px" }}
         >
-          <div className="search-container m-1" style={{ maxWidth: "300px" }}>
+          <div className="search-container-fluid m-1 " >
           <input
             type="text"
             className="form-control me-1  rounded-pill"

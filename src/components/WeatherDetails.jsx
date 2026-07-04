@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  WiHumidity,
-  WiStrongWind,
-  WiThermometer,
-} from "react-icons/wi";
+import { WiHumidity, WiStrongWind, WiThermometer } from "react-icons/wi";
 
 const WeatherDetails = ({ weather }) => {
   if (!weather) return null;
@@ -11,7 +7,6 @@ const WeatherDetails = ({ weather }) => {
   return (
     <div className="container mt-4">
       <div className="row g-3">
-
         <div className="col-md-4">
           <div className="weather-card text-center">
             <WiHumidity size={60} />
@@ -35,7 +30,6 @@ const WeatherDetails = ({ weather }) => {
             <h3>{weather.apparent_temperature}°C</h3>
           </div>
         </div>
-
       </div>
     </div>
   );

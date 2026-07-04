@@ -11,7 +11,7 @@ const Forecast = ({ forecast }) => {
 
         {forecast.time.map((day, index) => (
           <div className="forecast-row d-flex justify-content-between" key={index}>
-            <div className="forecast-day ms-4">
+            <div className="forecast-day">
               {index === 0
                 ? "Today"
                 : new Date(day).toLocaleDateString("en-US", {
