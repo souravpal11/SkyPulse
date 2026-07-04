@@ -32,25 +32,22 @@ export const getWeather = async (latitude, longitude) => {
         "weather_code",
       ].join(","),
 
-      hourly: [
-        "temperature_2m",
-        "weather_code",
-      ].join(","),
+      hourly: ["temperature_2m", "weather_code","precipitation_probability",].join(","),
 
       daily: [
-  "weather_code",
-  "temperature_2m_max",
-  "temperature_2m_min",
-  "sunrise",
-  "sunset",
-].join(","),
+        "weather_code",
+        "temperature_2m_max",
+        "temperature_2m_min",
+        "sunrise",
+        "sunset",
+        "precipitation_probability_max",
+      ].join(","),
 
       timezone: "auto",
       forecast_days: 7,
     },
   });
 
-  
   return response.data;
 };
 
@@ -73,4 +70,19 @@ export const getAirQuality = async (latitude, longitude) => {
   });
 
   return response.data.current;
+};
+
+export const SearchCitySuggestions = async (query) => {
+  if (!query.trim()) return [];
+
+  const response = await axios.get(GEO_URL, {
+    params: {
+      name: query,
+      count: 5,
+      language: "en",
+      format: "json",
+    },
+  });
+
+  return response.data.results || [];
 };

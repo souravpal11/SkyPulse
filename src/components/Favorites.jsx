@@ -7,7 +7,7 @@ const Favorites = ({ favorites, onSelect, onRemove }) => {
     <div className="container mt-4">
       <div className="weather-card">
 
-        <h3 className="mb-3">⭐ Favorite Cities</h3>
+        <h3 className="mb-3"><i className="fa-solid fa-star"></i> Favorite Cities</h3>
 
         {favorites.map((city, index) => (
           <div

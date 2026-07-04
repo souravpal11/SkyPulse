@@ -8,9 +8,16 @@ const CurrentWeather = ({ weather }) => {
 
   return (
     <div className="container  mt-4">
-      <div className="card shadow-lg p-4 text-center text-white" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}>
+      <div
+        className="card shadow-lg p-4 text-center text-white"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+      >
         <h2>
-          <i class="fa-solid fa-location-dot"></i> {weather.city}, {weather.country}
+          <i
+            class="fa-solid fa-location-dot"
+            style={{ fontSize: "1.8rem" }}
+          ></i>{" "}
+          {weather.city}, {weather.country}
         </h2>
 
         <WeatherIcon code={weather.weather_code} />
@@ -35,7 +42,10 @@ const CurrentWeather = ({ weather }) => {
           </div>
 
           <div className="col-md-4">
-            <i class="fa-solid fa-cloud mt-3 mb-1" style={{fontSize: "1.6rem"}}></i>
+            <i
+              class="fa-solid fa-cloud mt-3 mb-1"
+              style={{ fontSize: "1.6rem" }}
+            ></i>
             <h5>Weather</h5>
             <p>{weatherDescription(weather.weather_code)}</p>
           </div>

@@ -1,27 +1,40 @@
 import React from "react";
+import WeatherIcon from "./WeatherIcon";
 
 const Forecast = ({ forecast }) => {
   if (!forecast) return null;
 
   return (
     <div className="container mt-5">
-      <h3 className="mb-4 text-center" >7-Day Forecast</h3>
+      <div className="forecast-container">
+        <h3 className="forecast-title ms-3">7-Day Forecast</h3>
 
-      <div className="row">
         {forecast.time.map((day, index) => (
-          <div className="col-lg-3 col-md-4 col-sm-6 mb-3" key={index}>
-            <div className="card shadow p-3 text-center h-100 text-white" style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
-              <h5>
-                {new Date(day).toLocaleDateString("en-US", {
-                  weekday: "short",
-                })}
-              </h5>
+          <div className="forecast-row d-flex justify-content-between" key={index}>
+            <div className="forecast-day ms-4">
+              {index === 0
+                ? "Today"
+                : new Date(day).toLocaleDateString("en-US", {
+                    weekday: "long",
+                  })}
+            </div>
 
-              <h2>🌡️</h2>
+            <div className="forecast-icon " style={{ maxWidth: "50px" }}>
+              <WeatherIcon code={forecast.weather_code[index]} size={45} />
+            </div>
 
-              <h4>{forecast.temperature_2m_max[index]}°</h4>
+            <div className="forecast-temp me-4 d-flex justify-content-between" style={{ width: "200px" }}>
+              <span className="rain-chance">
+                💧 {forecast.precipitation_probability_max[index]}%
+              </span>
 
-              <p>Min: {forecast.temperature_2m_min[index]}°</p>
+              <span className="max-temp">
+                {Math.round(forecast.temperature_2m_max[index])}°
+              </span>
+
+              <span className="min-temp">
+                {Math.round(forecast.temperature_2m_min[index])}°
+              </span>
             </div>
           </div>
         ))}

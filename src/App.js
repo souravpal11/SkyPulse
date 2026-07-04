@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
-import SearchBar from "./components/SearchBar";
 import CurrentWeather from "./components/CurrentWeather";
 import "./App.css";
 import Forecast from "./components/Forecast";
@@ -17,6 +16,7 @@ import {
   getCoordinates,
   getWeather,
   getAirQuality,
+  SearchCitySuggestions,
 } from "./services/weatherApi";
 
 function App() {
@@ -27,45 +27,37 @@ function App() {
   const [hourly, setHourly] = useState(null);
   const [loading, setLoading] = useState(false);
   const [air, setAir] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
   const [favorites, setFavorites] = useState(() => {
-  return JSON.parse(localStorage.getItem("favorites")) || [];
-});
-  
-  const addFavorite = () => {
-  if (!weather) return;
+    return JSON.parse(localStorage.getItem("favorites")) || [];
+  });
 
-  if (!favorites.includes(weather.city)) {
-    const updated = [...favorites, weather.city];
+  const addFavorite = () => {
+    if (!weather) return;
+
+    if (!favorites.includes(weather.city)) {
+      const updated = [...favorites, weather.city];
+
+      setFavorites(updated);
+
+      localStorage.setItem("favorites", JSON.stringify(updated));
+    }
+  };
+
+  const removeFavorite = (city) => {
+    const updated = favorites.filter((item) => item !== city);
 
     setFavorites(updated);
 
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify(updated)
-    );
-  }
-};
+    localStorage.setItem("favorites", JSON.stringify(updated));
+  };
 
-const removeFavorite = (city) => {
-  const updated = favorites.filter(
-    (item) => item !== city
-  );
+  const searchFavorite = (selectedCity) => {
+    setCity(selectedCity);
 
-  setFavorites(updated);
-
-  localStorage.setItem(
-    "favorites",
-    JSON.stringify(updated)
-  );
-};
-
-const searchFavorite = (selectedCity) => {
-  setCity(selectedCity);
-
-  getCoordinates(selectedCity)
-    .then((location) =>
-      getWeather(location.latitude, location.longitude)
-        .then((data) => {
+    getCoordinates(selectedCity)
+      .then((location) =>
+        getWeather(location.latitude, location.longitude).then((data) => {
           setWeather({
             city: location.name,
             country: location.country,
@@ -74,10 +66,10 @@ const searchFavorite = (selectedCity) => {
 
           setForecast(data.daily);
           setHourly(data.hourly);
-        })
-    )
-    .catch((err) => alert(err.message));
-};
+        }),
+      )
+      .catch((err) => alert(err.message));
+  };
 
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(
@@ -112,7 +104,7 @@ const searchFavorite = (selectedCity) => {
     );
   };
 
-  const searchWeather = async () => {
+  const searchWeather = async (cityName = city) => {
     if (!city.trim()) {
       alert("Please enter a city.");
       return;
@@ -121,7 +113,7 @@ const searchFavorite = (selectedCity) => {
     try {
       setLoading(true);
 
-      const location = await getCoordinates(city);
+      const location = await getCoordinates(cityName);
 
       const data = await getWeather(location.latitude, location.longitude);
 
@@ -156,15 +148,32 @@ const searchFavorite = (selectedCity) => {
       document.body.style.background = background(weather.weather_code);
     }
   }, [weather]);
+
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (city.trim().length >= 2) {
+        try {
+          const results = await SearchCitySuggestions(city);
+          setSuggestions(results);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        setSuggestions([]);
+      }
+    }, 400); // waits 400ms after typing
+
+    return () => clearTimeout(timer);
+  }, [city]);
   return (
     <>
-      <Navbar />
-
-      <SearchBar
+      <Navbar
         city={city}
         setCity={setCity}
         searchWeather={searchWeather}
         getCurrentLocation={getCurrentLocation}
+        suggestions={suggestions}
+        setSuggestions={setSuggestions}
       />
 
       {loading ? (
@@ -173,18 +182,15 @@ const searchFavorite = (selectedCity) => {
         <>
           <CurrentWeather weather={weather} />
           <div className="text-center mt-3">
-  <button
-    className="btn btn-warning"
-    onClick={addFavorite}
-  >
-    ⭐ Add to Favorites
-  </button>
-</div>
-<Favorites
-  favorites={favorites}
-  onSelect={searchFavorite}
-  onRemove={removeFavorite}
-/>
+            <button className="btn btn-warning" onClick={addFavorite}>
+              <i className="fa-regular fa-star"></i> Add to Favorites
+            </button>
+          </div>
+          <Favorites
+            favorites={favorites}
+            onSelect={searchFavorite}
+            onRemove={removeFavorite}
+          />
           <WeatherDetails weather={weather} />
           <HourlyForecast hourly={hourly} />
           <Forecast forecast={forecast} />
