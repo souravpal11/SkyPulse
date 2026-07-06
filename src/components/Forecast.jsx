@@ -22,7 +22,7 @@ const Forecast = ({ forecast }) => {
                   })}
             </div>
 
-            <div className="forecast-icons me-2">
+            <div className="forecast-icons me-3">
               <WeatherIcon
                 code={forecast.weather_code[index]}
                 isDay={true}
@@ -37,7 +37,7 @@ const Forecast = ({ forecast }) => {
             </div>
 
             <div
-              className="forecast-temp me-3 d-flex justify-content-between"
+              className="forecast-temp me-2 d-flex justify-content-evenly"
               style={{ maxwidth: "90px" }}
             >
               <span className="max-temp">
