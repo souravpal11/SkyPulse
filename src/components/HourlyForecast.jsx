@@ -15,9 +15,9 @@ const HourlyForecast = ({ hourly }) => {
 
   // Show next 12 hours
   const hours =
-    startIndex !== -1
-      ? hourly.time.slice(startIndex, startIndex + 12)
-      : hourly.time.slice(0, 12);
+  startIndex !== -1
+    ? hourly.time.slice(startIndex, startIndex + 24)
+    : hourly.time.slice(0, 24);
 
   return (
     <div className="container mt-5">
@@ -43,9 +43,10 @@ const HourlyForecast = ({ hourly }) => {
               </p>
 
               <WeatherIcon
-                code={hourly.weather_code[startIndex + index]}
-                size={50}
-              />
+    code={hourly.weather_code[startIndex + index]}
+    isDay={hourly.is_day[startIndex + index] === 1}
+    size={50}
+/>
 
               <h5>
                 {Math.round(

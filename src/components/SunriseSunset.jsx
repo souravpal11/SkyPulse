@@ -1,5 +1,8 @@
 import React from "react";
-import { WiSunrise, WiSunset } from "react-icons/wi";
+import sunrise from "../assets/lottie/sunrise.json";
+import sunset from "../assets/lottie/sunset.json";
+import Lottie from "lottie-react";
+
 
 const SunriseSunset = ({ forecast }) => {
   if (!forecast) return null;
@@ -10,7 +13,10 @@ const SunriseSunset = ({ forecast }) => {
 
         <div className="col-md-6">
           <div className="weather-card text-center">
-            <WiSunrise size={70} />
+            <Lottie
+  animationData={sunrise}
+  style={{ width: 90, height: 90 }}
+/>
             <h4>Sunrise</h4>
 
             <h3>
@@ -25,7 +31,9 @@ const SunriseSunset = ({ forecast }) => {
 
         <div className="col-md-6">
           <div className="weather-card text-center">
-            <WiSunset size={70} />
+            <Lottie
+  animationData={sunset}
+  style={{ width: 90, height: 90 }} />
             <h4>Sunset</h4>
 
             <h3>

@@ -30,9 +30,15 @@ export const getWeather = async (latitude, longitude) => {
         "apparent_temperature",
         "wind_speed_10m",
         "weather_code",
+        "is_day",
       ].join(","),
 
-      hourly: ["temperature_2m", "weather_code","precipitation_probability",].join(","),
+      hourly: [
+        "temperature_2m",
+        "weather_code",
+        "precipitation_probability",
+        "is_day",
+      ].join(","),
 
       daily: [
         "weather_code",

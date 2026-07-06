@@ -20,7 +20,11 @@ const CurrentWeather = ({ weather }) => {
           {weather.city}, {weather.country}
         </h2>
 
-        <WeatherIcon code={weather.weather_code} />
+        <WeatherIcon
+          code={weather.weather_code}
+          isDay={weather.is_day === 1}
+          size={100}
+        />
 
         <h1 className="display-2">{weather.temperature_2m}°C</h1>
 
@@ -47,7 +51,7 @@ const CurrentWeather = ({ weather }) => {
               style={{ fontSize: "1.6rem" }}
             ></i>
             <h5>Weather</h5>
-            <p>{weatherDescription(weather.weather_code)}</p>
+            <p>{weatherDescription(weather.weather_code,weather.is_day === 1)}</p>
           </div>
         </div>
       </div>

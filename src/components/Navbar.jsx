@@ -20,7 +20,7 @@ const Navbar = ({
           className="d-inline-block align-text-top me-2"
         />
         <form
-          className="d-flex align-items-center bg-dark rounded-pill p-2 mt-2"
+          className="d-flex align-items-center bg-dark rounded-pill p-1 mt-2"
           onSubmit={(e) => {
             e.preventDefault(); // Prevent page reload
             if (city.trim()) {

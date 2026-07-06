@@ -10,8 +10,11 @@ const Forecast = ({ forecast }) => {
         <h3 className="forecast-title ms-3">7-Day Forecast</h3>
 
         {forecast.time.map((day, index) => (
-          <div className="forecast-row d-flex justify-content-between" key={index}>
-            <div className="forecast-day">
+          <div
+            className="forecast-row d-flex justify-content-between"
+            key={index}
+          >
+            <div className="forecast-day me-2">
               {index === 0
                 ? "Today"
                 : new Date(day).toLocaleDateString("en-US", {
@@ -19,15 +22,24 @@ const Forecast = ({ forecast }) => {
                   })}
             </div>
 
-            <div className="forecast-icon " style={{ maxWidth: "50px" }}>
-              <WeatherIcon code={forecast.weather_code[index]} size={45} />
+            <div className="forecast-icons me-2">
+              <WeatherIcon
+                code={forecast.weather_code[index]}
+                isDay={true}
+                size={35}
+              />
+
+              <WeatherIcon
+                code={forecast.weather_code[index]}
+                isDay={false}
+                size={35}
+              />
             </div>
 
-            <div className="forecast-temp me-4 d-flex justify-content-between" style={{ width: "200px" }}>
-              <span className="rain-chance">
-                💧 {forecast.precipitation_probability_max[index]}%
-              </span>
-
+            <div
+              className="forecast-temp me-3 d-flex justify-content-between"
+              style={{ maxwidth: "90px" }}
+            >
               <span className="max-temp">
                 {Math.round(forecast.temperature_2m_max[index])}°
               </span>

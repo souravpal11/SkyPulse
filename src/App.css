@@ -284,3 +284,10 @@ button {
 nav {
   z-index: 9999;
 }
+
+.forecast-icons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
