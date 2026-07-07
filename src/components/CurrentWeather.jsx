@@ -2,6 +2,8 @@ import React from "react";
 import { WiHumidity, WiStrongWind } from "react-icons/wi";
 import WeatherIcon from "./WeatherIcon";
 import { weatherDescription } from "../utils/weatherCode";
+import locationpin from "../assets/lottie/Locationpin.json";
+import Lottie from "lottie-react"; 
 
 const CurrentWeather = ({ weather }) => {
   if (!weather) return null;
@@ -11,14 +13,14 @@ const CurrentWeather = ({ weather }) => {
       <div
         className="card shadow-lg p-4 text-center text-white"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
-      >
-        <h2>
-          <i
-            class="fa-solid fa-location-dot"
-            style={{ fontSize: "1.8rem" }}
-          ></i>{" "}
+      > 
+      <div className="d-flex align-items-center justify-content-center">
+        <Lottie animationData={locationpin} style={{ width: 50, height: 50 }} />
+        <h2 className="mb-0">
+          {" "}
           {weather.city}, {weather.country}
         </h2>
+        </div>
 
         <WeatherIcon
           code={weather.weather_code}
