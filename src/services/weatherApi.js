@@ -29,8 +29,12 @@ export const getWeather = async (latitude, longitude) => {
         "relative_humidity_2m",
         "apparent_temperature",
         "wind_speed_10m",
+        "wind_direction_10m",
         "weather_code",
         "is_day",
+        "visibility",
+        "uv_index",
+        "surface_pressure",
       ].join(","),
 
       hourly: [
@@ -47,6 +51,7 @@ export const getWeather = async (latitude, longitude) => {
         "sunrise",
         "sunset",
         "precipitation_probability_max",
+
       ].join(","),
 
       timezone: "auto",

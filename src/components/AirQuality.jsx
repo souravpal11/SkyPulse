@@ -15,31 +15,25 @@ const AirQuality = ({ air }) => {
   return (
     <div className="container mt-4">
       <div className="weather-card">
+        <h3 className="text-center mb-4">🌫 Air Quality</h3>
 
-        <h3 className="text-center mb-4">
-          🌫 Air Quality
-        </h3>
-
-        <div className="row text-center">
-
-          <div className="col-md-4">
+        <div className="d-flex justify-content-between">
+          <div className="text-center ms-3">
             <h5>AQI</h5>
             <h2>{air.european_aqi}</h2>
             <p>{getAQIStatus(air.european_aqi)}</p>
           </div>
 
-          <div className="col-md-4">
+          <div className="text-center">
             <h5>PM2.5</h5>
             <h2>{air.pm2_5}</h2>
           </div>
 
-          <div className="col-md-4">
+          <div className="text-center me-3">
             <h5>PM10</h5>
             <h2>{air.pm10}</h2>
           </div>
-
         </div>
-
       </div>
     </div>
   );
