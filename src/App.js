@@ -225,6 +225,7 @@ import AirQuality from "./components/AirQuality";
 import Favorites from "./components/Favorites";
 import Footer from "./components/Footer";
 import WeatherMap from "./components/WeatherMap";
+import { BrowserRouter,Route,Routes } from "react-router-dom";
 
 import {
   getCoordinates,
@@ -232,6 +233,7 @@ import {
   getAirQuality,
   SearchCitySuggestions,
 } from "./services/weatherApi";
+import About from "./components/About";
 
 function App() {
   const [city, setCity] = useState("");
@@ -268,28 +270,27 @@ function App() {
 
     getCoordinates(selectedCity)
       .then((locationData) =>
-        getWeather(
-          locationData.latitude,
-          locationData.longitude
-        ).then(async (data) => {
-          const airData = await getAirQuality(
-            locationData.latitude,
-            locationData.longitude
-          );
+        getWeather(locationData.latitude, locationData.longitude).then(
+          async (data) => {
+            const airData = await getAirQuality(
+              locationData.latitude,
+              locationData.longitude,
+            );
 
-          setAir(airData);
+            setAir(airData);
 
-          setWeather({
-            city: locationData.name,
-            country: locationData.country,
-            latitude: locationData.latitude,
-            longitude: locationData.longitude,
-            ...data.current,
-          });
+            setWeather({
+              city: locationData.name,
+              country: locationData.country,
+              latitude: locationData.latitude,
+              longitude: locationData.longitude,
+              ...data.current,
+            });
 
-          setForecast(data.daily);
-          setHourly(data.hourly);
-        })
+            setForecast(data.daily);
+            setHourly(data.hourly);
+          },
+        ),
       )
       .catch((err) => alert(err.message));
   };
@@ -302,14 +303,11 @@ function App() {
         try {
           setLoading(true);
 
-          const data = await getWeather(
-            coords.latitude,
-            coords.longitude
-          );
+          const data = await getWeather(coords.latitude, coords.longitude);
 
           const airData = await getAirQuality(
             coords.latitude,
-            coords.longitude
+            coords.longitude,
           );
 
           setAir(airData);
@@ -330,7 +328,7 @@ function App() {
           setLoading(false);
         }
       },
-      () => alert("Location permission denied.")
+      () => alert("Location permission denied."),
     );
   };
 
@@ -349,12 +347,12 @@ function App() {
 
       const data = await getWeather(
         locationData.latitude,
-        locationData.longitude
+        locationData.longitude,
       );
 
       const airData = await getAirQuality(
         locationData.latitude,
-        locationData.longitude
+        locationData.longitude,
       );
 
       setAir(airData);
@@ -386,9 +384,7 @@ function App() {
 
   useEffect(() => {
     if (weather) {
-      document.body.style.background = background(
-        weather.weather_code
-      );
+      document.body.style.background = background(weather.weather_code);
     }
   }, [weather]);
 
@@ -413,6 +409,7 @@ function App() {
 
   return (
     <>
+    <BrowserRouter>
       <Navbar
         city={city}
         setCity={setCity}
@@ -422,19 +419,17 @@ function App() {
         setSuggestions={setSuggestions}
       />
 
-      {loading ? (
+      <Routes>
+        <Route 
+           path="/" element={loading ? (
         <Loader />
       ) : (
         <>
           <CurrentWeather weather={weather} />
 
           <div className="text-center mt-3">
-            <button
-              className="btn btn-warning"
-              onClick={addFavorite}
-            >
-              <i className="fa-regular fa-star"></i>{" "}
-              Add to Favorites
+            <button className="btn btn-warning" onClick={addFavorite}>
+              <i className="fa-regular fa-star"></i> Add to Favorites
             </button>
           </div>
 
@@ -448,10 +443,7 @@ function App() {
 
           <HourlyForecast hourly={hourly} />
 
-          <Forecast
-            forecast={forecast}
-            hourly={hourly}
-          />
+          <Forecast forecast={forecast} hourly={hourly} />
 
           <WeatherMap weather={weather} />
 
@@ -459,9 +451,12 @@ function App() {
 
           <AirQuality air={air} />
         </>
-      )}
+      )}/>
+      <Route path="/about" element={<About/>}/>
+      </Routes>
 
       <Footer />
+      </BrowserRouter>
     </>
   );
 }
