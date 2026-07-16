@@ -12,7 +12,7 @@ const Navbar = ({
 }) => {
   const location = useLocation();
   return (
-    <nav className="navbar navbar-dark bg-black ">
+    <nav className="navbar navbar-dark bg-black " style={{minHeight:"68.6px", paddingTop:"8px",paddingBottom:"8px"}}>
       <div className="container p-0">
         <div className="d-flex align-items-center">
         <img
@@ -75,7 +75,7 @@ const Navbar = ({
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
             <button
-              className="btn btn-success rounded-pill"
+              className="btn btn-success rounded-pill me-1"
               onClick={getCurrentLocation}
             >
               <i className="fa-solid fa-location-crosshairs py-1"></i>

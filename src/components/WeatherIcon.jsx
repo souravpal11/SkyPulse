@@ -76,21 +76,21 @@ const WeatherIcon = ({ code, isDay = true, size = 150 }) => {
     case code === 3:
       animation = cloudy;
       break;
-    
+
     //fog
     case code === 45 || code === 48:
       animation = fog;
       break;
 
     // Drizzle & Rain
-    case (code >= 51 && code <= 67):
-    case (code >= 80 && code <= 82):
+    case code >= 51 && code <= 67:
+    case code >= 80 && code <= 82:
       animation = rain;
       break;
 
     // Snow
-    case (code >= 71 && code <= 77):
-    case (code >= 85 && code <= 86):
+    case code >= 71 && code <= 77:
+    case code >= 85 && code <= 86:
       animation = snow;
       break;
 
